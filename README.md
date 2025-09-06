@@ -1,19 +1,19 @@
 # OSM Data Query & Analysis API
 
-A comprehensive FastAPI-based service for querying, analyzing, and visualizing OpenStreetMap (OSM) data within specified geographic areas. Designed for civil engineering, urban planning, GIS applications, and research.
+A comprehensive FastAPI-based service for querying, analyzing, and visualizing OpenStreetMap (OSM) data within specified geographic areas. Designed for data preseeding in machine learning annotation workflows, civil engineering, urban planning, GIS applications, and research.
 
-## 🚀 Key Features
+## Key Features
 
 - **Comprehensive OSM Coverage**: Support for 91+ feature types including civil engineering and survey features
 - **Raw Data Queries**: Retrieve OSM nodes, ways, and relations for any geographic area
-- **Engineering Reports**: Generate specialized Mach9 engineering and survey reports
+- **Data Preseeding**: Generate comprehensive datasets for machine learning annotation workflows
 - **Data Visualization**: Create interactive maps, static plots, and summary visualizations
 - **CSV Export**: Export detailed feature rollups for analysis
 - **REST API**: FastAPI-based web service with comprehensive documentation
 - **Interactive Documentation**: Custom web interface for easy testing
 - **Security Features**: Rate limiting, input validation, and CORS protection
 
-## 📊 Available Feature Types
+## Available Feature Types
 
 The API supports a comprehensive range of OSM feature types organized into categories:
 
@@ -46,7 +46,7 @@ The API supports a comprehensive range of OSM feature types organized into categ
 - `inlet`, `inlet_grate`, `inlet_kerb_grate`, `kerb_opening`
 - `storm_drain`, `catch_basin`
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the repository**:
 ```bash
@@ -70,7 +70,7 @@ The API will be available at:
 - **ReDoc API Docs**: http://localhost:8000/redoc
 - **Health Check**: http://localhost:8000/health
 
-## 📖 Usage
+## Usage
 
 ### Interactive Web Interface
 
@@ -115,21 +115,6 @@ curl -X POST "http://localhost:8000/generate" \
   }'
 ```
 
-#### Generate Mach9 Engineering Report
-```bash
-curl -X POST "http://localhost:8000/generate" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "bbox": {
-      "min_lat": 51.5033,
-      "min_lon": -0.1196,
-      "max_lat": 51.5043,
-      "max_lon": -0.1186
-    },
-    "outputs": ["mach9"]
-  }'
-```
-
 #### Download CSV Rollup Report
 ```bash
 curl -X POST "http://localhost:8000/csv-rollup" \
@@ -154,21 +139,29 @@ curl -X POST "http://localhost:8000/csv-rollup" \
 - **GET /download/{session_id}/{filename}** - Download generated files
 - **GET /session/{session_id}/files** - List files in a session
 - **GET /feature-types** - Get all available OSM feature types
-- **GET /mach9-feature-types** - Get Mach9-specific feature types
 - **GET /examples** - Get example requests
 - **GET /health** - Health check endpoint
 
-## 🏗️ Mach9 Engineering Reports
+## Data Preseeding for Machine Learning
 
-Specialized reports for civil engineering and survey work, including:
+This API is designed to support machine learning annotation workflows by providing comprehensive datasets that help annotators understand where features are likely to be located. Key benefits include:
 
-- **Infrastructure Analysis**: Roads, bridges, tunnels, utilities
-- **Survey Features**: Benchmarks, survey points, markers
-- **Drainage Systems**: Inlets, grates, storm drains, catch basins
-- **Safety Features**: Barriers, guard rails, traffic signals
-- **Utility Infrastructure**: Power lines, telecom, street furniture
+### Pre-annotation Analysis
+- **Feature Density Mapping**: Understand the distribution of different feature types across geographic areas
+- **Quality Assessment**: Identify areas with rich OSM data coverage for reliable annotations
+- **Feature Correlation**: Discover relationships between different feature types in the same area
 
-## 📊 Output Formats
+### Annotation Workflow Support
+- **Bounding Box Optimization**: Select optimal areas for annotation based on feature density
+- **Feature Type Prioritization**: Focus annotation efforts on the most relevant feature types
+- **Data Validation**: Cross-reference annotations with OSM data for quality assurance
+
+### Dataset Preparation
+- **Stratified Sampling**: Ensure balanced representation of different feature types
+- **Geographic Distribution**: Maintain geographic diversity in training datasets
+- **Feature Completeness**: Identify gaps in feature coverage for targeted data collection
+
+## Output Formats
 
 ### Text Reports
 - Comprehensive statistics and analysis
@@ -183,9 +176,9 @@ Specialized reports for civil engineering and survey work, including:
 ### Data Exports
 - **JSON**: Raw OSM data in structured format
 - **CSV**: Feature rollup reports with detailed counts
-- **Mach9 Reports**: Specialized engineering analysis
+- **Engineering Reports**: Specialized analysis for infrastructure features
 
-## 🔒 Security Features
+## Security Features
 
 - **Rate Limiting**: Configurable limits per endpoint
 - **Input Validation**: Bounding box size and coordinate validation
@@ -193,7 +186,7 @@ Specialized reports for civil engineering and survey work, including:
 - **File Management**: Automatic cleanup of temporary files
 - **Error Handling**: Comprehensive error responses
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 OSM-Pre-Seed-API/
@@ -201,7 +194,7 @@ OSM-Pre-Seed-API/
 ├── api_models.py             # Pydantic models and feature types
 ├── osm_query.py              # OSM Overpass API integration
 ├── report_generator.py       # Text report generation
-├── mach9_report_generator.py # Mach9 engineering reports
+├── mach9_report_generator.py # Engineering analysis reports
 ├── visualizer.py             # Visualization modules
 ├── start_api.py              # Server startup script
 ├── static/
@@ -210,14 +203,20 @@ OSM-Pre-Seed-API/
 └── README.md                 # This file
 ```
 
-## 🚦 Rate Limits
+## Rate Limits
 
 - **Query endpoints**: 20 requests/minute
 - **Generate endpoints**: 10 requests/minute
 - **File downloads**: 30 requests/minute
 - **Information endpoints**: 60 requests/minute
 
-## 🌍 Use Cases
+## Use Cases
+
+### Machine Learning Data Preparation
+- Pre-annotation dataset analysis
+- Feature distribution mapping
+- Training data quality assessment
+- Annotation workflow optimization
 
 ### Civil Engineering
 - Infrastructure surveys and mapping
@@ -237,7 +236,7 @@ OSM-Pre-Seed-API/
 - Research and academic studies
 - Environmental impact studies
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 - `MAX_BBOX_SIZE`: Maximum bounding box size (default: 0.1 degrees)
@@ -246,10 +245,10 @@ OSM-Pre-Seed-API/
 
 ### Customization
 - Modify `api_models.py` to add new feature types
-- Update `mach9_report_generator.py` for custom engineering reports
+- Update report generators for custom analysis
 - Customize visualizations in `visualizer.py`
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -257,19 +256,19 @@ OSM-Pre-Seed-API/
 4. Add tests if applicable
 5. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+## Support
 
 For issues, questions, or contributions:
 - Open an issue on GitHub
 - Check the API documentation at http://localhost:8000/docs
 - Review the interactive documentation at http://localhost:8000/
 
-## 🔄 Version History
+## Version History
 
 - **v1.0.0**: Initial release with comprehensive OSM data querying
-- **v1.1.0**: Added Mach9 engineering reports and CSV rollup functionality
+- **v1.1.0**: Added engineering reports and CSV rollup functionality
 - **v1.2.0**: Enhanced with 91+ feature types and improved documentation
