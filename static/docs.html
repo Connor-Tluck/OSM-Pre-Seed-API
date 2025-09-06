@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSM Data Query API - Interactive Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+        }
+        
+        .btn {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background: #2c3e50;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #7f8c8d;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .preset-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .preset-btn:hover {
+            background: #7f8c8d;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            display: none;
+        }
+        
+        .results h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #34495e;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .report-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .data-preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e1e8ed;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .download-links {
+            margin-top: 15px;
+        }
+        
+        .download-links a {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .download-links a:hover {
+            background: #218838;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #34495e;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ OSM Data Query API</h1>
+            <p>Interactive Documentation & Testing Interface</p>
+        </div>
+        
+        <div class="content">
+            <!-- Quick Query Section -->
+            <div class="section">
+                <h2>Quick Query</h2>
+                <p>Test the API with preset locations or enter your own coordinates:</p>
+                <div style="background: #e8f4f8; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #34495e;">
+                    <strong>💡 Performance Tips:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Use smaller bounding boxes for faster queries</li>
+                        <li>Select specific feature types instead of "all" for better performance</li>
+                        <li>Queries timeout after 30-60 seconds - try reducing the area if it's too slow</li>
+                    </ul>
+                </div>
+                
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="loadPreset('central_park')">Central Park, NYC</button>
+                    <button class="preset-btn" onclick="loadPreset('times_square')">Times Square, NYC</button>
+                    <button class="preset-btn" onclick="loadPreset('golden_gate')">Golden Gate Park, SF</button>
+                    <button class="preset-btn" onclick="loadPreset('london_eye')">London Eye, UK</button>
+                    <button class="preset-btn" onclick="loadPreset('small_test')">Small Test Area</button>
+                    <button class="preset-btn" onclick="loadMach9Preset()" style="background: #e74c3c; color: white;">🏗️ Mach9 Engineering</button>
+                </div>
+                
+                <form id="queryForm">
+                    <div class="form-row-4">
+                        <div class="form-group">
+                            <label for="min_lat">Min Latitude</label>
+                            <input type="number" id="min_lat" step="0.0001" placeholder="40.7648" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="min_lon">Min Longitude</label>
+                            <input type="number" id="min_lon" step="0.0001" placeholder="-73.9808" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="max_lat">Max Latitude</label>
+                            <input type="number" id="max_lat" step="0.0001" placeholder="40.8006" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="max_lon">Max Longitude</label>
+                            <input type="number" id="max_lon" step="0.0001" placeholder="-73.9490" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Feature Types (leave empty for all)</label>
+                        <div style="margin-bottom: 15px;">
+                            <button type="button" onclick="selectAllFeatureTypes()" class="preset-btn" style="margin-right: 10px;">Select All</button>
+                            <button type="button" onclick="clearAllSelections()" class="preset-btn">Clear All</button>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <!-- Transportation -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🚗 Transportation</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="highway" value="highway"><label for="highway">Highways</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="railway" value="railway"><label for="railway">Railways</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="aeroway" value="aeroway"><label for="aeroway">Airports</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="waterway" value="waterway"><label for="waterway">Waterways</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="aerialway" value="aerialway"><label for="aerialway">Cable Cars</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="public_transport" value="public_transport"><label for="public_transport">Public Transport</label></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Buildings & Infrastructure -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏢 Buildings & Infrastructure</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="building" value="building"><label for="building">Buildings</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="barrier" value="barrier"><label for="barrier">Barriers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="man_made" value="man_made"><label for="man_made">Man Made</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="power" value="power"><label for="power">Power</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="telecom" value="telecom"><label for="telecom">Telecom</label></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Land Use & Natural -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🌍 Land Use & Natural</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="landuse" value="landuse"><label for="landuse">Land Use</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="natural" value="natural"><label for="natural">Natural</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="geological" value="geological"><label for="geological">Geological</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="boundary" value="boundary"><label for="boundary">Boundaries</label></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Amenities & Services -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏪 Amenities & Services</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="amenity" value="amenity"><label for="amenity">Amenities</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="shop" value="shop"><label for="shop">Shops</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="tourism" value="tourism"><label for="tourism">Tourism</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="leisure" value="leisure"><label for="leisure">Leisure</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="sport" value="sport"><label for="sport">Sports</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="healthcare" value="healthcare"><label for="healthcare">Healthcare</label></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Administrative & Places -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏛️ Administrative & Places</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="place" value="place"><label for="place">Places</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="office" value="office"><label for="office">Offices</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="craft" value="craft"><label for="craft">Craft</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="military" value="military"><label for="military">Military</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="emergency" value="emergency"><label for="emergency">Emergency</label></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Historical & Cultural -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏛️ Historical & Cultural</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="historic" value="historic"><label for="historic">Historic</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="heritage" value="heritage"><label for="heritage">Heritage</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="archaeological_site" value="archaeological_site"><label for="archaeological_site">Archaeological</label></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Civil Engineering & Survey -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏗️ Civil Engineering & Survey</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="tunnel" value="tunnel"><label for="tunnel">Tunnels</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="bridge" value="bridge"><label for="bridge">Bridges</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="embankment" value="embankment"><label for="embankment">Embankments</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="retaining_wall" value="retaining_wall"><label for="retaining_wall">Retaining Walls</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="cycle_barrier" value="cycle_barrier"><label for="cycle_barrier">Cycle Barriers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="survey_point" value="survey_point"><label for="survey_point">Survey Points</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="benchmark" value="benchmark"><label for="benchmark">Benchmarks</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="marker" value="marker"><label for="marker">Markers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="culvert" value="culvert"><label for="culvert">Culverts</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="drain" value="drain"><label for="drain">Drains</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ditch" value="ditch"><label for="ditch">Ditches</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="street_lamp" value="street_lamp"><label for="street_lamp">Street Lamps</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="traffic_signals" value="traffic_signals"><label for="traffic_signals">Traffic Signals</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="bollard" value="bollard"><label for="bollard">Bollards</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="fence" value="fence"><label for="fence">Fences</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="wall" value="wall"><label for="wall">Walls</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="gate" value="gate"><label for="gate">Gates</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="manhole" value="manhole"><label for="manhole">Manholes</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="utility_pole" value="utility_pole"><label for="utility_pole">Utility Poles</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="street_cabinet" value="street_cabinet"><label for="street_cabinet">Street Cabinets</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="fire_hydrant" value="fire_hydrant"><label for="fire_hydrant">Fire Hydrants</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="pipeline" value="pipeline"><label for="pipeline">Pipelines</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="tower" value="tower"><label for="tower">Towers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="mast" value="mast"><label for="mast">Masts</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="antenna" value="antenna"><label for="antenna">Antennas</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="substation" value="substation"><label for="substation">Substations</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="generator" value="generator"><label for="generator">Generators</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="transformer" value="transformer"><label for="transformer">Transformers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="noise_barrier" value="noise_barrier"><label for="noise_barrier">Noise Barriers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="sound_barrier" value="sound_barrier"><label for="sound_barrier">Sound Barriers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="guard_rail" value="guard_rail"><label for="guard_rail">Guard Rails</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="crash_barrier" value="crash_barrier"><label for="crash_barrier">Crash Barriers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="steps" value="steps"><label for="steps">Steps</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ramp" value="ramp"><label for="ramp">Ramps</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="elevator" value="elevator"><label for="elevator">Elevators</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="escalator" value="escalator"><label for="escalator">Escalators</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="handrail" value="handrail"><label for="handrail">Handrails</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="railing" value="railing"><label for="railing">Railings</label></div>
+                                    <!-- Drainage and Inlet Features -->
+                                    <div class="checkbox-item"><input type="checkbox" id="inlet" value="inlet"><label for="inlet">Inlets</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="inlet_grate" value="inlet_grate"><label for="inlet_grate">Inlet Grates</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="inlet_kerb_grate" value="inlet_kerb_grate"><label for="inlet_kerb_grate">Inlet Kerb Grates</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="kerb_opening" value="kerb_opening"><label for="kerb_opening">Kerb Openings</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="storm_drain" value="storm_drain"><label for="storm_drain">Storm Drains</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="catch_basin" value="catch_basin"><label for="catch_basin">Catch Basins</label></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Output Types</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="output_data" value="data" checked>
+                                <label for="output_data">Raw Data</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="output_report" value="report" checked>
+                                <label for="output_report">Text Report</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="output_plot" value="plot">
+                                <label for="output_plot">Static Plot</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="output_map" value="map">
+                                <label for="output_map">Interactive Map</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="output_summary" value="summary">
+                                <label for="output_summary">Summary</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="output_mach9" value="mach9">
+                                <label for="output_mach9">🏗️ Mach9 Engineering Report</label>
+                            </div>
+                        </div>
+                        <div style="background: #e8f4f8; padding: 10px; border-radius: 4px; margin-top: 10px; border-left: 3px solid #34495e;">
+                            <strong>🏗️ Mach9 Engineering Report:</strong> Specialized report for civil engineering and survey work. 
+                            Automatically includes transportation objects, utility infrastructure, barriers, manholes, drainage structures, 
+                            and other features relevant for engineering analysis.
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <button type="button" class="btn" onclick="queryData()">🔍 Query Data Only</button>
+                        <button type="button" class="btn btn-secondary" onclick="generateFiles()">📁 Generate Files</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Results Section -->
+            <div id="results" class="results">
+                <h3>Query Results</h3>
+                <div id="resultsContent"></div>
+            </div>
+            
+            <!-- API Information Section -->
+            <div class="section">
+                <h2>API Information</h2>
+                <div class="form-row">
+                    <div>
+                        <h4>Available Endpoints:</h4>
+                        <ul>
+                            <li><strong>POST /query</strong> - Get raw OSM data</li>
+                            <li><strong>POST /generate</strong> - Generate files (reports, plots, maps)</li>
+                            <li><strong>POST /csv-rollup</strong> - Generate CSV rollup with feature counts</li>
+                            <li><strong>GET /feature-types</strong> - List available feature types</li>
+                            <li><strong>GET /mach9-feature-types</strong> - List Mach9 engineering feature types</li>
+                            <li><strong>GET /examples</strong> - Get example requests</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Rate Limits:</h4>
+                        <ul>
+                            <li>Query: 20 requests/minute</li>
+                            <li>Generate: 10 requests/minute</li>
+                            <li>Download: 30 requests/minute</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preset locations
+        const presets = {
+            central_park: {
+                min_lat: 40.7648,
+                min_lon: -73.9808,
+                max_lat: 40.8006,
+                max_lon: -73.9490,
+                description: "Central Park, New York City"
+            },
+            times_square: {
+                min_lat: 40.7580,
+                min_lon: -73.9855,
+                max_lat: 40.7595,
+                max_lon: -73.9840,
+                description: "Times Square, New York City"
+            },
+            golden_gate: {
+                min_lat: 37.7694,
+                min_lon: -122.4862,
+                max_lat: 37.7714,
+                max_lon: -122.4842,
+                description: "Golden Gate Park, San Francisco"
+            },
+            london_eye: {
+                min_lat: 51.5033,
+                min_lon: -0.1196,
+                max_lat: 51.5043,
+                max_lon: -0.1186,
+                description: "London Eye, United Kingdom"
+            },
+            small_test: {
+                min_lat: 40.775,
+                min_lon: -73.975,
+                max_lat: 40.785,
+                max_lon: -73.965,
+                description: "Small test area in NYC"
+            }
+        };
+        
+        function loadPreset(presetName) {
+            const preset = presets[presetName];
+            if (preset) {
+                document.getElementById('min_lat').value = preset.min_lat;
+                document.getElementById('min_lon').value = preset.min_lon;
+                document.getElementById('max_lat').value = preset.max_lat;
+                document.getElementById('max_lon').value = preset.max_lon;
+            }
+        }
+        
+        function loadMach9Preset() {
+            // Load a small test area suitable for engineering analysis
+            document.getElementById('min_lat').value = 40.758;
+            document.getElementById('min_lon').value = -73.9855;
+            document.getElementById('max_lat').value = 40.7585;
+            document.getElementById('max_lon').value = -73.985;
+            
+            // Clear all feature types first
+            clearAllFeatureTypes();
+            
+            // Select Mach9-specific feature types
+            const mach9FeatureTypes = [
+                'highway', 'railway', 'aeroway', 'waterway', 'public_transport',
+                'barrier', 'man_made', 'building',
+                'power', 'telecom', 'amenity',
+                'natural', 'landuse', 'boundary',
+                'traffic_sign', 'traffic_calming',
+                'surface', 'access', 'kerb',
+                'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
+                'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
+                'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
+                'manhole', 'utility_pole', 'street_cabinet', 'fire_hydrant', 'pipeline',
+                'tower', 'mast', 'antenna', 'substation', 'generator', 'transformer',
+                'noise_barrier', 'sound_barrier', 'guard_rail', 'crash_barrier',
+                'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing',
+                // Drainage and Inlet Features
+                'inlet', 'inlet_grate', 'inlet_kerb_grate', 'kerb_opening', 'storm_drain', 'catch_basin'
+            ];
+            
+            mach9FeatureTypes.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+            
+            // Select Mach9 output
+            document.getElementById('output_mach9').checked = true;
+            document.getElementById('output_data').checked = false;
+            document.getElementById('output_report').checked = false;
+        }
+        
+        function getSelectedFeatureTypes() {
+            const featureTypeIds = [
+                'highway', 'railway', 'aeroway', 'waterway', 'aerialway', 'public_transport',
+                'building', 'barrier', 'man_made', 'power', 'telecom',
+                'landuse', 'natural', 'geological', 'boundary',
+                'amenity', 'shop', 'tourism', 'leisure', 'sport', 'healthcare',
+                'place', 'office', 'craft', 'military', 'emergency',
+                'historic', 'heritage', 'archaeological_site',
+                'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
+                'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
+                'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
+                'manhole', 'utility_pole', 'street_cabinet', 'fire_hydrant', 'pipeline',
+                'tower', 'mast', 'antenna', 'substation', 'generator', 'transformer',
+                'noise_barrier', 'sound_barrier', 'guard_rail', 'crash_barrier',
+                'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing', 'kerb'
+            ];
+            const selectedTypes = [];
+            
+            featureTypeIds.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox && checkbox.checked) {
+                    selectedTypes.push(checkbox.value);
+                }
+            });
+            
+            return selectedTypes;
+        }
+        
+        function selectAllFeatureTypes() {
+            const featureTypeIds = [
+                'highway', 'railway', 'aeroway', 'waterway', 'aerialway', 'public_transport',
+                'building', 'barrier', 'man_made', 'power', 'telecom',
+                'landuse', 'natural', 'geological', 'boundary',
+                'amenity', 'shop', 'tourism', 'leisure', 'sport', 'healthcare',
+                'place', 'office', 'craft', 'military', 'emergency',
+                'historic', 'heritage', 'archaeological_site'
+            ];
+            
+            featureTypeIds.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+        
+        function clearAllFeatureTypes() {
+            const featureTypeIds = [
+                'highway', 'railway', 'aeroway', 'waterway', 'aerialway', 'public_transport',
+                'building', 'barrier', 'man_made', 'power', 'telecom',
+                'landuse', 'natural', 'geological', 'boundary',
+                'amenity', 'shop', 'tourism', 'leisure', 'sport', 'healthcare',
+                'place', 'office', 'craft', 'military', 'emergency',
+                'historic', 'heritage', 'archaeological_site',
+                // Civil Engineering and Survey Features
+                'kerb', 'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
+                'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
+                'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
+                'manhole', 'utility_pole', 'street_cabinet', 'fire_hydrant', 'pipeline',
+                'tower', 'mast', 'antenna', 'substation', 'generator', 'transformer',
+                'noise_barrier', 'sound_barrier', 'guard_rail', 'crash_barrier',
+                'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing',
+                // Drainage and Inlet Features
+                'inlet', 'inlet_grate', 'inlet_kerb_grate', 'kerb_opening', 'storm_drain', 'catch_basin',
+                // Additional Categories
+                'route', 'traffic_sign', 'traffic_calming', 'surface', 'access',
+                'addr', 'name', 'ref', 'operator', 'brand', 'website', 'phone',
+                'opening_hours', 'fee', 'wheelchair', 'smoking', 'wifi'
+            ];
+            
+            featureTypeIds.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
+            });
+        }
+        
+        function clearAllSelections() {
+            // Clear all feature types
+            clearAllFeatureTypes();
+            
+            // Clear all output selections
+            const outputCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="output_"]');
+            outputCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Reset bounding box to default
+            document.getElementById('min_lat').value = '51.5033';
+            document.getElementById('min_lon').value = '-0.1196';
+            document.getElementById('max_lat').value = '51.5043';
+            document.getElementById('max_lon').value = '-0.1186';
+            
+            // Clear results
+            const resultsDiv = document.getElementById('results');
+            if (resultsDiv) {
+                resultsDiv.innerHTML = '';
+                resultsDiv.style.display = 'none';
+            }
+        }
+        
+        function getSelectedOutputs() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][id^="output_"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+        
+        function showLoading() {
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('resultsContent').innerHTML = '<div class="loading">🔄 Loading...</div>';
+        }
+        
+        function showError(message) {
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('resultsContent').innerHTML = `<div class="error">❌ Error: ${message}</div>`;
+        }
+        
+        function showSuccess(message) {
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('resultsContent').innerHTML = `<div class="success">✅ ${message}</div>`;
+        }
+        
+        async function queryData() {
+            showLoading();
+            
+            const bbox = {
+                min_lat: parseFloat(document.getElementById('min_lat').value),
+                min_lon: parseFloat(document.getElementById('min_lon').value),
+                max_lat: parseFloat(document.getElementById('max_lat').value),
+                max_lon: parseFloat(document.getElementById('max_lon').value)
+            };
+            
+            const featureTypes = getSelectedFeatureTypes();
+            const outputs = getSelectedOutputs();
+            
+            const requestBody = {
+                bbox: bbox,
+                feature_types: featureTypes.length > 0 ? featureTypes : null,
+                outputs: outputs
+            };
+            
+            try {
+                // Add timeout to prevent hanging
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.detail || 'Request failed');
+                }
+                
+                displayQueryResults(data);
+                
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    showError('Request timed out after 30 seconds. Try a smaller bounding box or fewer feature types.');
+                } else {
+                    showError(error.message);
+                }
+            }
+        }
+        
+        async function generateFiles() {
+            showLoading();
+            
+            const bbox = {
+                min_lat: parseFloat(document.getElementById('min_lat').value),
+                min_lon: parseFloat(document.getElementById('min_lon').value),
+                max_lat: parseFloat(document.getElementById('max_lat').value),
+                max_lon: parseFloat(document.getElementById('max_lon').value)
+            };
+            
+            const featureTypes = getSelectedFeatureTypes();
+            const outputs = getSelectedOutputs();
+            
+            const requestBody = {
+                bbox: bbox,
+                feature_types: featureTypes.length > 0 ? featureTypes : null,
+                outputs: outputs
+            };
+            
+            try {
+                // Add timeout to prevent hanging
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout for file generation
+                
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.detail || 'Request failed');
+                }
+                
+                displayGenerateResults(data);
+                
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    showError('Request timed out after 60 seconds. Try a smaller bounding box or fewer feature types.');
+                } else {
+                    showError(error.message);
+                }
+            }
+        }
+        
+        function displayQueryResults(data) {
+            const resultsDiv = document.getElementById('resultsContent');
+            
+            let html = `
+                <div class="success">✅ Query completed successfully!</div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">${data.total_elements}</div>
+                        <div class="stat-label">Total Elements</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${data.nodes.length}</div>
+                        <div class="stat-label">Nodes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${data.ways.length}</div>
+                        <div class="stat-label">Ways</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${data.relations.length}</div>
+                        <div class="stat-label">Relations</div>
+                    </div>
+                </div>
+            `;
+            
+            if (data.nodes.length > 0 || data.ways.length > 0 || data.relations.length > 0) {
+                html += `
+                    <h4>📋 Data Preview</h4>
+                    <div class="data-preview">
+                        <strong>Sample Nodes:</strong><br>
+                        ${JSON.stringify(data.nodes.slice(0, 3), null, 2)}<br><br>
+                        <strong>Sample Ways:</strong><br>
+                        ${JSON.stringify(data.ways.slice(0, 3), null, 2)}
+                    </div>
+                `;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function displayGenerateResults(data) {
+            const resultsDiv = document.getElementById('resultsContent');
+            
+            let html = `
+                <div class="success">✅ Files generated successfully!</div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">${data.data.total_elements}</div>
+                        <div class="stat-label">Total Elements</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${data.files.length}</div>
+                        <div class="stat-label">Files Generated</div>
+                    </div>
+                </div>
+            `;
+            
+            if (data.files.length > 0) {
+                html += `
+                    <h4>📁 Generated Files</h4>
+                    <div class="download-links">
+                        ${data.files.map(file => `<a href="${file}" target="_blank">Download ${file.split('/').pop()}</a>`).join('')}
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="downloadCSVRollup()">
+                            📊 Download CSV Rollup
+                        </button>
+                    </div>
+                `;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        async function downloadCSVRollup() {
+            const bbox = {
+                min_lat: parseFloat(document.getElementById('min_lat').value),
+                min_lon: parseFloat(document.getElementById('min_lon').value),
+                max_lat: parseFloat(document.getElementById('max_lat').value),
+                max_lon: parseFloat(document.getElementById('max_lon').value)
+            };
+            
+            const featureTypes = getSelectedFeatureTypes();
+            
+            if (featureTypes.length === 0) {
+                alert('Please select at least one feature type');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/csv-rollup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        bbox: bbox,
+                        feature_types: featureTypes
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Failed to generate CSV rollup');
+                }
+                
+                // Get the CSV content
+                const csvContent = await response.text();
+                
+                // Create and download the file
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'osm_feature_rollup.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+            } catch (error) {
+                alert('Error generating CSV rollup: ' + error.message);
+            }
+        }
+        
+        // Load a default preset on page load
+        window.onload = function() {
+            loadPreset('small_test');
+        };
+    </script>
+</body>
+</html>

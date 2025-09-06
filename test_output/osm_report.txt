@@ -1,0 +1,116 @@
+================================================================================
+OSM DATA REPORT
+================================================================================
+Generated: 2025-09-05 11:50:37
+Bounding Box: 40.775000, -73.975000 to 40.785000, -73.965000
+
+SUMMARY STATISTICS
+----------------------------------------
+Total Elements: 2324
+  - Nodes (Points): 875
+  - Ways (Lines/Polygons): 1428
+  - Relations: 21
+
+Geometry Types:
+  - Point: 875
+  - LineString: 876
+  - Polygon: 552
+
+FEATURE TYPE ANALYSIS
+----------------------------------------
+Top Feature Types:
+  highway=footway: 630
+  natural=tree: 367
+  building=yes: 190
+  amenity=bench: 139
+  leisure=garden: 119
+  natural=wood: 96
+  highway=steps: 64
+  highway=crossing: 61
+  landuse=grass: 42
+  highway=secondary: 40
+  building=apartments: 33
+  highway=pedestrian: 26
+  amenity=waste_basket: 24
+  highway=service: 24
+  highway=path: 21
+  amenity=bicycle_parking: 16
+  amenity=drinking_water: 16
+  highway=traffic_signals: 14
+  highway=bus_stop: 14
+  amenity=restaurant: 14
+
+DETAILED BREAKDOWN
+----------------------------------------
+NODES (875 total):
+  natural: 373
+  amenity: 235
+  backrest: 108
+  highway: 103
+  barrier: 99
+  tactile_paving: 85
+  name: 81
+  leaf_cycle: 61
+  crossing: 60
+  kerb: 58
+
+WAYS (1428 total):
+  highway: 827
+  surface: 590
+  lit: 457
+  height: 244
+  building: 238
+  nycdoitt:bin: 229
+  addr:housenumber: 201
+  addr:street: 201
+  addr:postcode: 199
+  footway: 192
+
+RELATIONS (21 total):
+  type: 21
+  name: 11
+  wikidata: 9
+  building: 8
+  height: 8
+  nycdoitt:bin: 8
+  website: 7
+  natural: 6
+  wikipedia: 6
+  addr:city: 4
+
+SAMPLE DATA
+----------------------------------------
+Sample Nodes:
+  Node 1:
+    ID: 42421800
+    Location: 40.783987, -73.970313
+    Tags: {'highway': 'traffic_signals'}
+
+  Node 2:
+    ID: 42424225
+    Location: 40.779486, -73.973593
+    Tags: {'highway': 'traffic_signals'}
+
+  Node 3:
+    ID: 42424851
+    Location: 40.784623, -73.969849
+    Tags: {'highway': 'traffic_signals'}
+
+Sample Ways:
+  Way 1:
+    ID: 5669343
+    Nodes: 13
+    Tags: {'access:conditional': 'no @ (01:00-06:00)', 'highway': 'service', 'lanes': '1'}
+    Geometry: LineString
+
+  Way 2:
+    ID: 5669691
+    Nodes: 11
+    Tags: {'alt_name': 'Transverse Road 2', 'bicycle': 'yes', 'cycleway:both': 'no'}
+    Geometry: LineString
+
+  Way 3:
+    ID: 5670192
+    Nodes: 9
+    Tags: {'alt_name': 'West 82 Street', 'hgv': 'local', 'highway': 'residential'}
+    Geometry: LineString

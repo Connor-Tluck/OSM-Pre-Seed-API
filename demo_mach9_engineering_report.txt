@@ -1,0 +1,96 @@
+================================================================================
+MACH9 ENGINEERING & SURVEY REPORT
+================================================================================
+
+BOUNDING BOX:
+  Min Lat: 40.758000
+  Min Lon: -73.985500
+  Max Lat: 40.758500
+  Max Lon: -73.985000
+  Area: 0.000000 square degrees
+
+SUMMARY STATISTICS:
+  Total Elements: 25
+  Nodes: 6
+  Ways: 7
+  Relations: 1
+
+ENGINEERING FEATURE ANALYSIS:
+----------------------------------------
+
+TRANSPORTATION OBJECTS:
+  Traffic Signs: 1
+  Traffic Lights: 1
+  Bollards: 1
+  Street Lights: 1
+
+UTILITY OBJECTS:
+  Manholes: 1
+  Utility Infrastructure: 2
+  Fire Hydrants: 1
+
+CIVIL ENGINEERING FEATURES:
+  Bridges: 1
+  Water Structures: 1
+
+================================================================================
+DETAILED FEATURE BREAKDOWN
+================================================================================
+
+TRANSPORTATION OBJECTS:
+
+  Highway Traffic Signals (1 found):
+    - Unnamed (nodes)
+      Tags: highway=traffic_signals
+
+  Unknown (2 found):
+    - Unnamed (nodes)
+    - Unnamed (nodes)
+
+  Barrier Bollard (1 found):
+    - Unnamed (nodes)
+      Tags: barrier=bollard
+
+UTILITY OBJECTS:
+
+  Unknown (2 found):
+    - Unnamed (nodes)
+    - Unnamed (nodes)
+
+  Power Line (1 found):
+    - Unnamed (ways)
+      Tags: power=line
+
+CIVIL ENGINEERING FEATURES:
+
+  Man Made Bridge (1 found):
+    - Unnamed (ways)
+      Tags: man_made=bridge
+
+  Unknown (1 found):
+    - Unnamed (ways)
+
+SURVEY CONTROL POINTS:
+  No features found in this category.
+
+================================================================================
+INFRASTRUCTURE ANALYSIS
+================================================================================
+
+HIGHWAY INFRASTRUCTURE:
+  footway: 1 segments
+  primary: 1 segments
+  secondary: 1 segments
+
+BARRIER INFRASTRUCTURE:
+  bollard: 1 features
+  fence: 1 features
+
+MAN-MADE INFRASTRUCTURE:
+  bridge: 1 features
+
+================================================================================
+SURVEY & ENGINEERING RECOMMENDATIONS
+================================================================================
+1. Low data density - consider expanding survey area
+2. Add survey control points for accurate positioning

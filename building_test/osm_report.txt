@@ -1,0 +1,115 @@
+================================================================================
+OSM DATA REPORT
+================================================================================
+Generated: 2025-09-05 11:52:00
+Bounding Box: 40.775000, -73.975000 to 40.785000, -73.965000
+
+SUMMARY STATISTICS
+----------------------------------------
+Total Elements: 492
+  - Nodes (Points): 235
+  - Ways (Lines/Polygons): 249
+  - Relations: 8
+
+Geometry Types:
+  - Point: 235
+  - Polygon: 249
+
+FEATURE TYPE ANALYSIS
+----------------------------------------
+Top Feature Types:
+  building=yes: 190
+  amenity=bench: 139
+  building=apartments: 33
+  amenity=waste_basket: 24
+  amenity=bicycle_parking: 16
+  amenity=drinking_water: 16
+  amenity=restaurant: 14
+  amenity=recycling: 7
+  amenity=parking: 7
+  building=roof: 5
+  amenity=toilets: 4
+  amenity=vending_machine: 3
+  amenity=shelter: 3
+  amenity=place_of_worship: 3
+  amenity=school: 2
+  amenity=post_box: 2
+  amenity=cafe: 2
+  amenity=theatre: 2
+  building=museum: 2
+  amenity=fountain: 2
+
+DETAILED BREAKDOWN
+----------------------------------------
+NODES (235 total):
+  amenity: 235
+  backrest: 108
+  check_date: 39
+  name: 25
+  material: 23
+  fee: 22
+  addr:housenumber: 22
+  addr:street: 22
+  addr:city: 21
+  addr:postcode: 21
+
+WAYS (249 total):
+  building: 238
+  height: 229
+  nycdoitt:bin: 228
+  addr:housenumber: 201
+  addr:street: 201
+  addr:postcode: 199
+  name: 24
+  amenity: 22
+  addr:city: 21
+  building:levels: 19
+
+RELATIONS (8 total):
+  building: 8
+  height: 8
+  nycdoitt:bin: 8
+  type: 8
+  addr:city: 3
+  addr:housenumber: 3
+  addr:state: 3
+  addr:street: 3
+  name: 3
+  phone: 3
+
+SAMPLE DATA
+----------------------------------------
+Sample Nodes:
+  Node 1:
+    ID: 357648477
+    Location: 40.784941, -73.973742
+    Tags: {'amenity': 'school', 'ele': '20', 'gnis:feature_id': '2493035'}
+
+  Node 2:
+    ID: 419359969
+    Location: 40.783718, -73.974062
+    Tags: {'amenity': 'bicycle_parking', 'bicycle_parking': 'stands', 'capacity': '2'}
+
+  Node 3:
+    ID: 419361252
+    Location: 40.783971, -73.973869
+    Tags: {'amenity': 'bicycle_parking', 'bicycle_parking': 'stands', 'capacity': '2'}
+
+Sample Ways:
+  Way 1:
+    ID: 221918229
+    Nodes: 8
+    Tags: {'building': 'roof', 'building:levels': '1', 'layer': '1'}
+    Geometry: Polygon
+
+  Way 2:
+    ID: 269293207
+    Nodes: 18
+    Tags: {'addr:city': 'New York', 'addr:housenumber': '145-146', 'addr:postcode': '10023'}
+    Geometry: Polygon
+
+  Way 3:
+    ID: 269294896
+    Nodes: 8
+    Tags: {'addr:housenumber': '10', 'addr:postcode': '10023', 'addr:street': 'West 76th Street'}
+    Geometry: Polygon

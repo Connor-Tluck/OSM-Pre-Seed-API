@@ -1,0 +1,116 @@
+================================================================================
+OSM DATA REPORT
+================================================================================
+Generated: 2025-09-05 11:50:09
+Bounding Box: 40.764800, -73.980800 to 40.800600, -73.949000
+
+SUMMARY STATISTICS
+----------------------------------------
+Total Elements: 32057
+  - Nodes (Points): 14006
+  - Ways (Lines/Polygons): 17795
+  - Relations: 256
+
+Geometry Types:
+  - Point: 14006
+  - LineString: 7833
+  - Polygon: 9962
+
+FEATURE TYPE ANALYSIS
+----------------------------------------
+Top Feature Types:
+  building=yes: 7191
+  highway=footway: 5752
+  natural=tree: 3681
+  highway=crossing: 2074
+  building=apartments: 1131
+  amenity=bench: 646
+  amenity=bicycle_parking: 608
+  highway=traffic_signals: 548
+  amenity=restaurant: 505
+  highway=secondary: 348
+  highway=service: 285
+  highway=bus_stop: 280
+  highway=steps: 255
+  leisure=garden: 238
+  highway=primary: 218
+  highway=residential: 214
+  highway=street_lamp: 208
+  amenity=cafe: 178
+  landuse=grass: 177
+  amenity=waste_basket: 163
+
+DETAILED BREAKDOWN
+----------------------------------------
+NODES (14006 total):
+  natural: 3694
+  name: 3252
+  amenity: 3237
+  highway: 3167
+  addr:street: 2458
+  addr:housenumber: 2400
+  tactile_paving: 2391
+  crossing: 2035
+  barrier: 2002
+  addr:postcode: 1915
+
+WAYS (17795 total):
+  building: 8580
+  height: 8494
+  nycdoitt:bin: 8489
+  highway: 7421
+  addr:street: 7127
+  addr:housenumber: 7112
+  addr:postcode: 7046
+  surface: 5024
+  footway: 4085
+  lit: 2270
+
+RELATIONS (256 total):
+  type: 256
+  nycdoitt:bin: 153
+  building: 152
+  height: 152
+  name: 111
+  addr:postcode: 72
+  addr:street: 71
+  addr:housenumber: 70
+  public_transport: 48
+  wikidata: 44
+
+SAMPLE DATA
+----------------------------------------
+Sample Nodes:
+  Node 1:
+    ID: 42421728
+    Location: 40.798048, -73.960044
+    Tags: {'highway': 'traffic_signals'}
+
+  Node 2:
+    ID: 42421731
+    Location: 40.798654, -73.961474
+    Tags: {'highway': 'traffic_signals'}
+
+  Node 3:
+    ID: 42421737
+    Location: 40.799244, -73.962873
+    Tags: {'highway': 'traffic_signals'}
+
+Sample Ways:
+  Way 1:
+    ID: 5668966
+    Nodes: 3
+    Tags: {'bicycle': 'yes', 'cycleway': 'lane', 'hgv': 'destination'}
+    Geometry: LineString
+
+  Way 2:
+    ID: 5668968
+    Nodes: 15
+    Tags: {'alt_name': 'West 80 Street', 'highway': 'residential', 'lanes': '2'}
+    Geometry: LineString
+
+  Way 3:
+    ID: 5668977
+    Nodes: 19
+    Tags: {'alt_name': 'Edgar Allen Poe Street', 'highway': 'residential', 'lane_markings': 'no'}
+    Geometry: LineString
