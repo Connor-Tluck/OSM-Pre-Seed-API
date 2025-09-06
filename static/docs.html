@@ -293,7 +293,7 @@
                     <button class="preset-btn" onclick="loadPreset('golden_gate')">Golden Gate Park, SF</button>
                     <button class="preset-btn" onclick="loadPreset('london_eye')">London Eye, UK</button>
                     <button class="preset-btn" onclick="loadPreset('small_test')">Small Test Area</button>
-                    <button class="preset-btn" onclick="loadMach9Preset()" style="background: #e74c3c; color: white;">🏗️ Mach9 Engineering</button>
+                    <button class="preset-btn" onclick="loadEngineeringPreset()" style="background: #e74c3c; color: white;">Engineering</button>
                 </div>
                 
                 <form id="queryForm">
@@ -317,29 +317,28 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Feature Types (leave empty for all)</label>
+                        <label>Main Feature Categories (leave empty for all)</label>
                         <div style="margin-bottom: 15px;">
-                            <button type="button" onclick="selectAllFeatureTypes()" class="preset-btn" style="margin-right: 10px;">Select All</button>
+                            <button type="button" onclick="selectAllMainFeatures()" class="preset-btn" style="margin-right: 10px;">Select All</button>
                             <button type="button" onclick="clearAllSelections()" class="preset-btn">Clear All</button>
                         </div>
                         
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                             <!-- Transportation -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🚗 Transportation</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Transportation</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="highway" value="highway"><label for="highway">Highways</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="railway" value="railway"><label for="railway">Railways</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="aeroway" value="aeroway"><label for="aeroway">Airports</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="waterway" value="waterway"><label for="waterway">Waterways</label></div>
-                                    <div class="checkbox-item"><input type="checkbox" id="aerialway" value="aerialway"><label for="aerialway">Cable Cars</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="public_transport" value="public_transport"><label for="public_transport">Public Transport</label></div>
                                 </div>
                             </div>
                             
                             <!-- Buildings & Infrastructure -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏢 Buildings & Infrastructure</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Buildings & Infrastructure</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="building" value="building"><label for="building">Buildings</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="barrier" value="barrier"><label for="barrier">Barriers</label></div>
@@ -351,18 +350,17 @@
                             
                             <!-- Land Use & Natural -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🌍 Land Use & Natural</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Land Use & Natural</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="landuse" value="landuse"><label for="landuse">Land Use</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="natural" value="natural"><label for="natural">Natural</label></div>
-                                    <div class="checkbox-item"><input type="checkbox" id="geological" value="geological"><label for="geological">Geological</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="boundary" value="boundary"><label for="boundary">Boundaries</label></div>
                                 </div>
                             </div>
                             
                             <!-- Amenities & Services -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏪 Amenities & Services</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Amenities & Services</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="amenity" value="amenity"><label for="amenity">Amenities</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="shop" value="shop"><label for="shop">Shops</label></div>
@@ -375,7 +373,7 @@
                             
                             <!-- Administrative & Places -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏛️ Administrative & Places</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Administrative & Places</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="place" value="place"><label for="place">Places</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="office" value="office"><label for="office">Offices</label></div>
@@ -387,17 +385,16 @@
                             
                             <!-- Historical & Cultural -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏛️ Historical & Cultural</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Historical & Cultural</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="historic" value="historic"><label for="historic">Historic</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="heritage" value="heritage"><label for="heritage">Heritage</label></div>
-                                    <div class="checkbox-item"><input type="checkbox" id="archaeological_site" value="archaeological_site"><label for="archaeological_site">Archaeological</label></div>
                                 </div>
                             </div>
                             
                             <!-- Civil Engineering & Survey -->
                             <div>
-                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">🏗️ Civil Engineering & Survey</h4>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Civil Engineering & Survey</h4>
                                 <div class="checkbox-group" style="grid-template-columns: 1fr;">
                                     <div class="checkbox-item"><input type="checkbox" id="tunnel" value="tunnel"><label for="tunnel">Tunnels</label></div>
                                     <div class="checkbox-item"><input type="checkbox" id="bridge" value="bridge"><label for="bridge">Bridges</label></div>
@@ -446,6 +443,18 @@
                                     <div class="checkbox-item"><input type="checkbox" id="catch_basin" value="catch_basin"><label for="catch_basin">Catch Basins</label></div>
                                 </div>
                             </div>
+                            
+                            <!-- Additional Categories -->
+                            <div>
+                                <h4 style="color: #34495e; margin-bottom: 10px; font-size: 14px;">Additional Categories</h4>
+                                <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                                    <div class="checkbox-item"><input type="checkbox" id="route" value="route"><label for="route">Routes</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="traffic_sign" value="traffic_sign"><label for="traffic_sign">Traffic Signs</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="traffic_calming" value="traffic_calming"><label for="traffic_calming">Traffic Calming</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="surface" value="surface"><label for="surface">Surface</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="access" value="access"><label for="access">Access</label></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -474,11 +483,11 @@
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="output_mach9" value="mach9">
-                                <label for="output_mach9">🏗️ Mach9 Engineering Report</label>
+                                <label for="output_mach9">Engineering Report</label>
                             </div>
                         </div>
                         <div style="background: #e8f4f8; padding: 10px; border-radius: 4px; margin-top: 10px; border-left: 3px solid #34495e;">
-                            <strong>🏗️ Mach9 Engineering Report:</strong> Specialized report for civil engineering and survey work. 
+                            <strong>Engineering Report:</strong> Specialized report for civil engineering and survey work. 
                             Automatically includes transportation objects, utility infrastructure, barriers, manholes, drainage structures, 
                             and other features relevant for engineering analysis.
                         </div>
@@ -575,7 +584,7 @@
             }
         }
         
-        function loadMach9Preset() {
+        function loadEngineeringPreset() {
             // Load a small test area suitable for engineering analysis
             document.getElementById('min_lat').value = 40.758;
             document.getElementById('min_lon').value = -73.9855;
@@ -585,14 +594,14 @@
             // Clear all feature types first
             clearAllFeatureTypes();
             
-            // Select Mach9-specific feature types
-            const mach9FeatureTypes = [
+            // Select engineering-specific feature types
+            const engineeringFeatureTypes = [
                 'highway', 'railway', 'aeroway', 'waterway', 'public_transport',
                 'barrier', 'man_made', 'building',
                 'power', 'telecom', 'amenity',
                 'natural', 'landuse', 'boundary',
                 'traffic_sign', 'traffic_calming',
-                'surface', 'access', 'kerb',
+                'surface', 'access',
                 'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
                 'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
                 'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
@@ -604,7 +613,7 @@
                 'inlet', 'inlet_grate', 'inlet_kerb_grate', 'kerb_opening', 'storm_drain', 'catch_basin'
             ];
             
-            mach9FeatureTypes.forEach(id => {
+            engineeringFeatureTypes.forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
                     checkbox.checked = true;
@@ -618,24 +627,26 @@
         }
         
         function getSelectedFeatureTypes() {
-            const featureTypeIds = [
-                'highway', 'railway', 'aeroway', 'waterway', 'aerialway', 'public_transport',
+            const mainFeatureKeys = [
+                'highway', 'railway', 'aeroway', 'waterway', 'public_transport',
                 'building', 'barrier', 'man_made', 'power', 'telecom',
-                'landuse', 'natural', 'geological', 'boundary',
+                'landuse', 'natural', 'boundary',
                 'amenity', 'shop', 'tourism', 'leisure', 'sport', 'healthcare',
                 'place', 'office', 'craft', 'military', 'emergency',
-                'historic', 'heritage', 'archaeological_site',
+                'historic', 'heritage',
                 'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
                 'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
                 'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
                 'manhole', 'utility_pole', 'street_cabinet', 'fire_hydrant', 'pipeline',
                 'tower', 'mast', 'antenna', 'substation', 'generator', 'transformer',
                 'noise_barrier', 'sound_barrier', 'guard_rail', 'crash_barrier',
-                'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing', 'kerb'
+                'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing',
+                'inlet', 'inlet_grate', 'inlet_kerb_grate', 'kerb_opening', 'storm_drain', 'catch_basin',
+                'route', 'traffic_sign', 'traffic_calming', 'surface', 'access'
             ];
             const selectedTypes = [];
             
-            featureTypeIds.forEach(id => {
+            mainFeatureKeys.forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox && checkbox.checked) {
                     selectedTypes.push(checkbox.value);
@@ -645,17 +656,26 @@
             return selectedTypes;
         }
         
-        function selectAllFeatureTypes() {
-            const featureTypeIds = [
-                'highway', 'railway', 'aeroway', 'waterway', 'aerialway', 'public_transport',
+        function selectAllMainFeatures() {
+            const mainFeatureKeys = [
+                'highway', 'railway', 'aeroway', 'waterway', 'public_transport',
                 'building', 'barrier', 'man_made', 'power', 'telecom',
-                'landuse', 'natural', 'geological', 'boundary',
+                'landuse', 'natural', 'boundary',
                 'amenity', 'shop', 'tourism', 'leisure', 'sport', 'healthcare',
                 'place', 'office', 'craft', 'military', 'emergency',
-                'historic', 'heritage', 'archaeological_site'
+                'historic', 'heritage',
+                'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
+                'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
+                'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
+                'manhole', 'utility_pole', 'street_cabinet', 'fire_hydrant', 'pipeline',
+                'tower', 'mast', 'antenna', 'substation', 'generator', 'transformer',
+                'noise_barrier', 'sound_barrier', 'guard_rail', 'crash_barrier',
+                'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing',
+                'inlet', 'inlet_grate', 'inlet_kerb_grate', 'kerb_opening', 'storm_drain', 'catch_basin',
+                'route', 'traffic_sign', 'traffic_calming', 'surface', 'access'
             ];
             
-            featureTypeIds.forEach(id => {
+            mainFeatureKeys.forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
                     checkbox.checked = true;
@@ -664,30 +684,25 @@
         }
         
         function clearAllFeatureTypes() {
-            const featureTypeIds = [
-                'highway', 'railway', 'aeroway', 'waterway', 'aerialway', 'public_transport',
+            const mainFeatureKeys = [
+                'highway', 'railway', 'aeroway', 'waterway', 'public_transport',
                 'building', 'barrier', 'man_made', 'power', 'telecom',
-                'landuse', 'natural', 'geological', 'boundary',
+                'landuse', 'natural', 'boundary',
                 'amenity', 'shop', 'tourism', 'leisure', 'sport', 'healthcare',
                 'place', 'office', 'craft', 'military', 'emergency',
-                'historic', 'heritage', 'archaeological_site',
-                // Civil Engineering and Survey Features
-                'kerb', 'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
+                'historic', 'heritage',
+                'tunnel', 'bridge', 'embankment', 'retaining_wall', 'cycle_barrier',
                 'survey_point', 'benchmark', 'marker', 'culvert', 'drain', 'ditch',
                 'street_lamp', 'traffic_signals', 'bollard', 'fence', 'wall', 'gate',
                 'manhole', 'utility_pole', 'street_cabinet', 'fire_hydrant', 'pipeline',
                 'tower', 'mast', 'antenna', 'substation', 'generator', 'transformer',
                 'noise_barrier', 'sound_barrier', 'guard_rail', 'crash_barrier',
                 'steps', 'ramp', 'elevator', 'escalator', 'handrail', 'railing',
-                // Drainage and Inlet Features
                 'inlet', 'inlet_grate', 'inlet_kerb_grate', 'kerb_opening', 'storm_drain', 'catch_basin',
-                // Additional Categories
-                'route', 'traffic_sign', 'traffic_calming', 'surface', 'access',
-                'addr', 'name', 'ref', 'operator', 'brand', 'website', 'phone',
-                'opening_hours', 'fee', 'wheelchair', 'smoking', 'wifi'
+                'route', 'traffic_sign', 'traffic_calming', 'surface', 'access'
             ];
             
-            featureTypeIds.forEach(id => {
+            mainFeatureKeys.forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
                     checkbox.checked = false;

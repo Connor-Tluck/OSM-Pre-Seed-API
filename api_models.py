@@ -193,6 +193,42 @@ class HealthResponse(BaseModel):
     version: str = "1.0.0"
 
 
+# Main KEY categories for simplified feature selection
+MAIN_FEATURE_KEYS = [
+    # Transportation
+    "highway", "railway", "aeroway", "waterway", "public_transport",
+    
+    # Buildings and Infrastructure
+    "building", "barrier", "man_made", "power", "telecom",
+    
+    # Land Use and Natural Features
+    "landuse", "natural", "boundary",
+    
+    # Amenities and Services
+    "amenity", "shop", "tourism", "leisure", "sport", "healthcare",
+    
+    # Administrative and Places
+    "place", "office", "craft", "military", "emergency",
+    
+    # Historical and Cultural
+    "historic", "heritage",
+    
+    # Civil Engineering and Survey Features
+    "tunnel", "bridge", "embankment", "retaining_wall", "cycle_barrier",
+    "survey_point", "benchmark", "marker", "culvert", "drain", "ditch",
+    "street_lamp", "traffic_signals", "bollard", "fence", "wall", "gate",
+    "manhole", "utility_pole", "street_cabinet", "fire_hydrant", "pipeline",
+    "tower", "mast", "antenna", "substation", "generator", "transformer",
+    "noise_barrier", "sound_barrier", "guard_rail", "crash_barrier",
+    "steps", "ramp", "elevator", "escalator", "handrail", "railing",
+    
+    # Drainage and Inlet Features
+    "inlet", "inlet_grate", "inlet_kerb_grate", "kerb_opening", "storm_drain", "catch_basin",
+    
+    # Additional Categories
+    "route", "traffic_sign", "traffic_calming", "surface", "access"
+]
+
 # Available feature types for validation - comprehensive OSM feature types
 AVAILABLE_FEATURE_TYPES = [
     # Transportation

@@ -21,7 +21,7 @@ import aiofiles
 from api_models import (
     OSMQueryRequest, OSMDataResponse, ReportResponse, 
     VisualizationResponse, APIResponse, ErrorResponse, 
-    HealthResponse, OutputType, FeatureTypeValidator, MACH9_FEATURE_TYPES, AVAILABLE_FEATURE_TYPES
+    HealthResponse, OutputType, FeatureTypeValidator, MACH9_FEATURE_TYPES, AVAILABLE_FEATURE_TYPES, MAIN_FEATURE_KEYS
 )
 from osm_query import OSMQuery
 from report_generator import OSMReportGenerator, save_json_report
@@ -503,6 +503,33 @@ async def list_session_files(request: Request, session_id: str):
             })
     
     return {"session_id": session_id, "files": files}
+
+
+@app.get("/main-feature-keys")
+@limiter.limit("60/minute")
+async def get_main_feature_keys(request: Request):
+    """
+    Get main KEY categories for simplified feature selection.
+    
+    This endpoint returns the main OSM feature key categories that can be used in queries.
+    Each key represents a broad category that includes all related sub-features.
+    
+    **Main Categories:**
+    - **Transportation**: highway, railway, aeroway, waterway, public_transport
+    - **Buildings & Infrastructure**: building, barrier, man_made, power, telecom
+    - **Land Use & Natural**: landuse, natural, boundary
+    - **Amenities & Services**: amenity, shop, tourism, leisure, sport, healthcare
+    - **Administrative & Places**: place, office, craft, military, emergency
+    - **Historical & Cultural**: historic, heritage
+    - **Civil Engineering**: tunnel, bridge, embankment, retaining_wall, cycle_barrier
+    - **Survey Features**: survey_point, benchmark, marker, culvert, drain, ditch
+    - **Utilities**: manhole, utility_pole, street_cabinet, fire_hydrant, pipeline
+    - **Safety & Barriers**: noise_barrier, guard_rail, crash_barrier, bollard, fence
+    - **Drainage**: inlet, inlet_grate, inlet_kerb_grate, kerb_opening, storm_drain, catch_basin
+    
+    **Rate Limit:** 60 requests per minute
+    """
+    return {"main_feature_keys": MAIN_FEATURE_KEYS}
 
 
 @app.get("/feature-types")
